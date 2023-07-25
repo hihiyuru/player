@@ -13,6 +13,7 @@
 		C66725642A6E836300300FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66725622A6E836300300FFA /* Main.storyboard */; };
 		C66725662A6E836700300FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C66725652A6E836700300FFA /* Assets.xcassets */; };
 		C66725692A6E836700300FFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66725672A6E836700300FFA /* LaunchScreen.storyboard */; };
+		C66725712A6E83BB00300FFA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66725702A6E83BB00300FFA /* PlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		C66725652A6E836700300FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C66725682A6E836700300FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C667256A2A6E836700300FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C66725702A6E83BB00300FFA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				C667255E2A6E836300300FFA /* SceneDelegate.swift */,
 				C66725602A6E836300300FFA /* ViewController.swift */,
 				C66725622A6E836300300FFA /* Main.storyboard */,
+				C66725702A6E83BB00300FFA /* PlayerViewController.swift */,
 				C66725652A6E836700300FFA /* Assets.xcassets */,
 				C66725672A6E836700300FFA /* LaunchScreen.storyboard */,
 				C667256A2A6E836700300FFA /* Info.plist */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C66725612A6E836300300FFA /* ViewController.swift in Sources */,
+				C66725712A6E83BB00300FFA /* PlayerViewController.swift in Sources */,
 				C667255D2A6E836300300FFA /* AppDelegate.swift in Sources */,
 				C667255F2A6E836300300FFA /* SceneDelegate.swift in Sources */,
 			);
