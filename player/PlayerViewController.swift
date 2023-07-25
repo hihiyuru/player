@@ -97,6 +97,7 @@ class PlayerViewController: UIViewController {
         songSegmentedControl.selectedSegmentIndex = 0
         
         // 根據showingLyrics的值，自動切換視圖
+        showingLyrics = false
         if showingLyrics {
             showLyricsView()
         } else {
