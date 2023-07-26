@@ -1,26 +1,36 @@
-//
-//  PlayerViewController.swift
-//  player
-//
-//  Created by 徐于茹 on 2023/7/24.
-//
-
 import UIKit
+import AVFoundation
+import OSLog
+
+struct Song {
+    let name: String
+    let albumPic: String
+    let songFile: String
+    let singer: String
+}
 
 class PlayerViewController: UIViewController {
+    let logger = Logger()
+    
     // 歌曲相關資料
-    let songName = ["Moral Of The Story", "I Love U & I Hate U", "Lavender Haze"]
-    let albumsPic = ["MoralOfTheStory_1", "ILoveUIHateU_2", "LavenderHaze_3"]
-    let singers = ["Ashe", "Gnash", "Taylor Swift"]
+    let songs: [Song] = [
+        Song(name: "Moral Of The Story", albumPic: "MoralOfTheStory_1", songFile: "MoralOfTheStory", singer: "Ashe"),
+        Song(name: "I Love U & I Hate U", albumPic: "ILoveUIHateU_2", songFile: "ILoveUIHateU", singer: "Gnash"),
+        Song(name: "Lavender Haze", albumPic: "LavenderHaze_3", songFile: "LavenderHaze", singer: "Taylor Swift")
+    ]
     
     // 顯示選項相關資料
-    let showOption = ["album", "lyrics"]
+    let showOption: [(String, String)] = [("album", "專輯封面"), ("lyrics", "歌詞")]
     
     // 當前歌曲索引
     var currentIndex = 0
     
     // 是否顯示歌詞視圖
     var showingLyrics = false
+    
+    var player = AVPlayer()
+    
+    var timeObserverToken: Any?
     
     // IBOutlet連結
     @IBOutlet weak var titleLabel: UILabel!
@@ -33,68 +43,136 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var preButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var timeSlider: UISlider!
+    @IBOutlet weak var songPassTimeLabel: UILabel!
+    @IBOutlet weak var songDurationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 設定UIButton的配置
-        var config = UIButton.Configuration.plain()
-        // 設定圖像，將圖像顏色設定為白色並調整尺寸為64pt
-        let resizedImage = UIImage(systemName: "arrowtriangle.right.circle.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal).resized(to: CGSize(width: 64, height: 64))
-        config.image = resizedImage
-        
-        // 將配置應用到按鈕
-        playButton.configuration = config
-        
-        // pageControl的點點
-        songPageControl.numberOfPages = songName.count
-        
-        // 歌詞scrollView先隱藏
+        setupGradientBackground()
+        setupSlider()
         lyricsScrollView.isHidden = true
         showingLyrics = false
-        
-        // 動態設定 Label 大小
         lyricsLabel.sizeToFit()
-        
-        // 初始化畫面
         changeSong()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: .main) { _ in
+            self.nextSong()
+            self.playSong()
+           print("finish, next song")
+        }
     }
     
-    // 切換至專輯封面視圖
+    func setupGradientBackground() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            CGColor(srgbRed: 53/255, green: 91/255, blue: 98/255, alpha: 1),
+            CGColor(srgbRed: 31/255, green: 49/255, blue: 57/255, alpha: 1)
+        ]
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setupSlider() {
+        let thumbImage = UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15))
+        timeSlider.setThumbImage(thumbImage, for: .normal)
+        timeSlider.tintColor = .white
+    }
+    
     func showSongPicView() {
         songPicImageView.isHidden = false
         lyricsScrollView.isHidden = true
         showingLyrics = false
     }
     
-    // 切換至歌詞視圖
     func showLyricsView() {
         songPicImageView.isHidden = true
         lyricsScrollView.isHidden = false
         showingLyrics = true
     }
     
-    // 上一首歌曲
     func preSong() {
-        currentIndex = (currentIndex == 0) ? (songName.count - 1) : (currentIndex - 1)
+        currentIndex = (currentIndex == 0) ? (songs.count - 1) : (currentIndex - 1)
+        removeTimeObserver()
         changeSong()
     }
     
-    // 下一首歌曲
     func nextSong() {
-        currentIndex = (currentIndex == songName.count - 1) ? 0 : (currentIndex + 1)
+        currentIndex = (currentIndex == songs.count - 1) ? 0 : (currentIndex + 1)
+        removeTimeObserver()
         changeSong()
+    }
+    
+    func formatTimeDuration(_ duration: CMTime?) -> String {
+        guard let duration = duration else {
+            return "00:00"
+        }
+        
+        let totalSeconds = CMTimeGetSeconds(duration)
+        let minutes = Int(totalSeconds / 60)
+        let seconds = Int(totalSeconds.truncatingRemainder(dividingBy: 60))
+        
+        let formattedDuration = String(format: "%02d:%02d", minutes, seconds)
+        return formattedDuration
+    }
+    
+    func setTimeUI(passTime: String, durationTime: String) {
+        songPassTimeLabel.text = passTime
+        songDurationLabel.text = durationTime
+    }
+    
+    func setSliderUI(currentTime: Float, songDuration: Float) {
+        timeSlider.value = currentTime
+        timeSlider.minimumValue = 0
+        timeSlider.maximumValue =  songDuration
+    }
+    
+    func removeTimeObserver() {
+        if let token = timeObserverToken {
+            player.removeTimeObserver(token)
+            timeObserverToken = nil
+        }
+    }
+    
+    func addSongDuration() {
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
+        let interval = CMTime(seconds: 1, preferredTimescale: timeScale)
+        let mainQueue = DispatchQueue.main
+        
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: mainQueue) { [weak self] time in
+            guard let self = self else { return } // 使用weak self避免retain cycle
+            
+            if self.player.timeControlStatus == .playing {
+                let songDuration = self.player.currentItem?.duration
+                let formattedDuration = self.formatTimeDuration(songDuration)
+                print("整首歌時間長度: \(formattedDuration)")
+                
+                let currentTime = CMTimeGetSeconds(time)
+                let formattedCurrentTime = self.formatTimeDuration(CMTime(seconds: currentTime, preferredTimescale: timeScale))
+                print("Current playback time: \(formattedCurrentTime)")
+                self.setTimeUI(passTime: formattedCurrentTime, durationTime: formattedDuration)
+                
+                if !self.timeSlider.isTracking {
+                    self.setSliderUI(currentTime: Float(currentTime), songDuration: Float(songDuration?.seconds ?? 0))
+                }
+            }
+        }
     }
     
     // 更新歌曲資訊及視圖顯示
     func changeSong() {
-        titleLabel.text = songName[currentIndex]
-        singerLabel.text = singers[currentIndex]
-        songPicImageView.image =  UIImage(named: albumsPic[currentIndex])
+        let currentSong = songs[currentIndex]
+        titleLabel.text = currentSong.name
+        singerLabel.text = currentSong.singer
+        songPicImageView.image = UIImage(named: currentSong.albumPic)
+        songPageControl.numberOfPages = songs.count
         songPageControl.currentPage = currentIndex
-        lyricsLabel.text = "\(songName[currentIndex])歌詞"
+        lyricsLabel.text = "\(currentSong.name)歌詞"
         lyricsLabel.sizeToFit()
         songSegmentedControl.selectedSegmentIndex = 0
+        timeSlider.maximumValue = 0
+        timeSlider.value = 0
+        songPassTimeLabel.text = "00:00"
+        songDurationLabel.text = "00:00"
         
         // 根據showingLyrics的值，自動切換視圖
         showingLyrics = false
@@ -102,6 +180,41 @@ class PlayerViewController: UIViewController {
             showLyricsView()
         } else {
             showSongPicView()
+        }
+        
+        // 移除前一首歌曲的時間觀察器
+        removeTimeObserver()
+        
+        // 切換歌曲
+        replaceSong()
+        
+        // 重新加入時間觀察器
+        addSongDuration()
+    }
+    
+    // 切換歌曲
+    func replaceSong() {
+        let songUrl = Bundle.main.url(forResource: songs[currentIndex].songFile, withExtension: ".mp3")!
+        let playerItem = AVPlayerItem(url: songUrl)
+        player.replaceCurrentItem(with: playerItem)
+    }
+    
+    // 播放歌曲
+    func playSong() {
+        playButton.setBackgroundImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
+        if player.currentItem == nil {
+            replaceSong()
+        }
+        player.play()
+    }
+    
+    // 播放或暫停按鈕的IBAction
+    @IBAction func play(_ sender: UIButton) {
+        if player.timeControlStatus == .playing {
+            sender.setBackgroundImage(UIImage(systemName: "arrowtriangle.right.circle.fill"), for: .normal)
+            player.pause()
+        } else {
+            playSong()
         }
     }
     
@@ -125,7 +238,6 @@ class PlayerViewController: UIViewController {
     
     // 滑動手勢事件
     @IBAction func onSwiper(_ sender: Any) {
-        // 判斷滑動方向，並執行對應的上一首或下一首歌曲
         if let gestureRecognizer = sender as? UISwipeGestureRecognizer {
             if gestureRecognizer.direction == .left {
                 nextSong()
@@ -139,24 +251,20 @@ class PlayerViewController: UIViewController {
     @IBAction func pre(_ sender: Any) {
         preSong()
     }
-
+    
     // 下一首按鈕的IBAction
     @IBAction func next(_ sender: Any) {
         nextSong()
     }
-}
-
-// Helper extension to resize UIImage
-extension UIImage {
-    // 定義一個方法 resized(to:)，用於調整圖片的大小
-    func resized(to size: CGSize) -> UIImage? {
-        // 使用 UIGraphicsImageRenderer 來處理圖片的繪製，設定繪製的尺寸為指定的 size
-        let renderer = UIGraphicsImageRenderer(size: size)
-        
-        // 使用 renderer.image { _ in ... } 進行圖片的繪製
-        return renderer.image { _ in
-            // 在指定的繪製區域中，使用 draw(in:) 方法將原始圖片繪製到新的圖片中，同時調整尺寸
-            draw(in: CGRect(origin: .zero, size: size))
+    
+    // 修改歌曲播放進度的IBAction
+    @IBAction func changeTime(_ sender: UISlider) {
+        if sender.isTracking {
+            player.pause()
+            let time = CMTime(value: CMTimeValue(Int(sender.value)), timescale: 1)
+            player.seek(to: time)
+            player.play()
         }
     }
 }
+
