@@ -71,7 +71,6 @@ class PlayerViewController: UIViewController {
             }
             self.playSong()
             
-            print("finish, next song")
         }
     }
     
@@ -308,11 +307,17 @@ class PlayerViewController: UIViewController {
     
     // 修改歌曲播放進度的IBAction
     @IBAction func changeTime(_ sender: UISlider) {
+        
         if sender.isTracking {
-            player.pause()
+            let isCurrentPlaying = player.timeControlStatus == .playing ? true : false
+            if isCurrentPlaying {
+                player.pause()
+            }
             let time = CMTime(value: CMTimeValue(Int(sender.value)), timescale: 1)
             player.seek(to: time)
-            player.play()
+            if isCurrentPlaying {
+                player.play()
+            }
         }
     }
     
