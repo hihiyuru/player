@@ -29,8 +29,8 @@
                                 <rect key="frame" x="50" y="138" width="312" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="album"/>
-                                    <segment title="lyrics"/>
+                                    <segment title="Album"/>
+                                    <segment title="Lyrics"/>
                                 </segments>
                                 <connections>
                                     <action selector="changeShow:" destination="BYZ-38-t0r" eventType="valueChanged" id="75I-BF-OIu"/>
@@ -278,6 +278,9 @@ Oh-oh, oh-oh (that's the moral of the story, that's the-)
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="onRepeat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="i2k-zE-qg8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgZ-Oa-s7T">
                                 <rect key="frame" x="19" y="730" width="54" height="34"/>
@@ -287,6 +290,9 @@ Oh-oh, oh-oh (that's the moral of the story, that's the-)
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="onRandom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gBn-G9-zOC"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

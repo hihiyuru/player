@@ -32,6 +32,10 @@ class PlayerViewController: UIViewController {
     
     var timeObserverToken: Any?
     
+    var isRandom = false
+    
+    var isRepeat = false
+    
     // IBOutlet連結
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var singerLabel: UILabel!
@@ -47,6 +51,7 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var songPassTimeLabel: UILabel!
     @IBOutlet weak var songDurationLabel: UILabel!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientBackground()
@@ -56,9 +61,17 @@ class PlayerViewController: UIViewController {
         lyricsLabel.sizeToFit()
         changeSong()
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: .main) { _ in
-            self.nextSong()
+            if self.isRepeat {
+                self.repeatSong()
+            } else if !self.isRandom {
+                
+                self.nextSong()
+            } else {
+                self.randomSong()
+            }
             self.playSong()
-           print("finish, next song")
+            
+            print("finish, next song")
         }
     }
     
@@ -78,30 +91,59 @@ class PlayerViewController: UIViewController {
         timeSlider.tintColor = .white
     }
     
+    // 顯示專輯封面視圖
     func showSongPicView() {
         songPicImageView.isHidden = false
         lyricsScrollView.isHidden = true
         showingLyrics = false
     }
     
+    // 顯示歌詞視圖
     func showLyricsView() {
         songPicImageView.isHidden = true
         lyricsScrollView.isHidden = false
         showingLyrics = true
     }
     
+    // 重複播放目前歌曲
+    func repeatSong () {
+        changeSong()
+    }
+    
+    // 隨機播放下一首歌曲
+    func randomSong() {
+        var randomIndex: Int = currentIndex // 將 randomIndex 初始化為 currentIndex 的初始值
+        repeat {
+            randomIndex = Int.random(in: 0...2)
+        } while randomIndex == currentIndex
+        logger.log("進入隨機 \(randomIndex)")
+        removeTimeObserver()
+        currentIndex = randomIndex
+        changeSong()
+    }
+    
+    // 切換到上一首歌曲
     func preSong() {
         currentIndex = (currentIndex == 0) ? (songs.count - 1) : (currentIndex - 1)
+        // 移除前一首歌曲的時間觀察器
         removeTimeObserver()
+        // 切換歌曲
         changeSong()
     }
     
+    // 切換到下一首歌曲
     func nextSong() {
-        currentIndex = (currentIndex == songs.count - 1) ? 0 : (currentIndex + 1)
-        removeTimeObserver()
-        changeSong()
+        if !isRandom {
+            
+            currentIndex = (currentIndex == songs.count - 1) ? 0 : (currentIndex + 1)
+            removeTimeObserver()
+            changeSong()
+        } else {
+            randomSong()
+        }
     }
     
+    // 格式化歌曲時間
     func formatTimeDuration(_ duration: CMTime?) -> String {
         guard let duration = duration else {
             return "00:00"
@@ -115,17 +157,20 @@ class PlayerViewController: UIViewController {
         return formattedDuration
     }
     
+    // 設置歌曲播放時間的 UI 顯示
     func setTimeUI(passTime: String, durationTime: String) {
         songPassTimeLabel.text = passTime
         songDurationLabel.text = durationTime
     }
     
+    // 設置歌曲播放進度條的 UI 顯示
     func setSliderUI(currentTime: Float, songDuration: Float) {
         timeSlider.value = currentTime
         timeSlider.minimumValue = 0
         timeSlider.maximumValue =  songDuration
     }
     
+    // 移除歌曲播放時間觀察器
     func removeTimeObserver() {
         if let token = timeObserverToken {
             player.removeTimeObserver(token)
@@ -133,6 +178,7 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    // 添加歌曲播放時間觀察器
     func addSongDuration() {
         let timeScale = CMTimeScale(NSEC_PER_SEC)
         let interval = CMTime(seconds: 1, preferredTimescale: timeScale)
@@ -142,15 +188,18 @@ class PlayerViewController: UIViewController {
             guard let self = self else { return } // 使用weak self避免retain cycle
             
             if self.player.timeControlStatus == .playing {
+                // 取得歌曲總長度
                 let songDuration = self.player.currentItem?.duration
                 let formattedDuration = self.formatTimeDuration(songDuration)
-                print("整首歌時間長度: \(formattedDuration)")
                 
+                // 取得當前播放時間
                 let currentTime = CMTimeGetSeconds(time)
                 let formattedCurrentTime = self.formatTimeDuration(CMTime(seconds: currentTime, preferredTimescale: timeScale))
-                print("Current playback time: \(formattedCurrentTime)")
+                
+                // 更新播放時間的 UI 顯示
                 self.setTimeUI(passTime: formattedCurrentTime, durationTime: formattedDuration)
                 
+                // 如果滑塊不在被拖動的狀態，則更新播放進度條的 UI 顯示
                 if !self.timeSlider.isTracking {
                     self.setSliderUI(currentTime: Float(currentTime), songDuration: Float(songDuration?.seconds ?? 0))
                 }
@@ -264,6 +313,24 @@ class PlayerViewController: UIViewController {
             let time = CMTime(value: CMTimeValue(Int(sender.value)), timescale: 1)
             player.seek(to: time)
             player.play()
+        }
+    }
+    
+    // 隨機播放按鈕的IBAction
+    @IBAction func onRandom(_ sender: UIButton) {
+        isRandom = !isRandom
+        logger.log("隨機嗎？\(self.isRandom)")
+
+    }
+    
+    // 重複播放按鈕的IBAction
+    @IBAction func onRepeat(_ sender: UIButton) {
+        isRepeat = !isRepeat
+        // 根據 isRepeat 的狀態來更改重複播放按鈕的圖示
+        if isRepeat {
+            sender.setImage(UIImage(systemName: "repeat.1"), for: .normal)
+        } else {
+            sender.setImage(UIImage(systemName: "repeat"), for: .normal)
         }
     }
 }
