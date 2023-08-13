@@ -2,28 +2,23 @@ import UIKit
 import AVFoundation
 import OSLog
 
-struct Song {
-    let name: String
-    let albumPic: String
-    let songFile: String
-    let singer: String
-}
+//struct Song {
+//    let name: String
+//    let albumPic: String
+//    let songFile: String
+//    let singer: String
+//}
 
 class PlayerViewController: UIViewController {
     let logger = Logger()
-    
-    // 歌曲相關資料
-    let songs: [Song] = [
-        Song(name: "Moral Of The Story", albumPic: "MoralOfTheStory_1", songFile: "MoralOfTheStory", singer: "Ashe"),
-        Song(name: "I Love U & I Hate U", albumPic: "ILoveUIHateU_2", songFile: "ILoveUIHateU", singer: "Gnash"),
-        Song(name: "Lavender Haze", albumPic: "LavenderHaze_3", songFile: "LavenderHaze", singer: "Taylor Swift")
-    ]
+
+    var songs: [Song]!
     
     // 顯示選項相關資料
     let showOption: [(String, String)] = [("album", "專輯封面"), ("lyrics", "歌詞")]
     
     // 當前歌曲索引
-    var currentIndex = 0
+    var currentIndex: Int!
     
     // 是否顯示歌詞視圖
     var showingLyrics = false
@@ -74,6 +69,15 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if player.timeControlStatus == .playing {
+            removeTimeObserver()
+            player.pause()
+        }
+    }
+    
     func setupGradientBackground() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
@@ -113,7 +117,7 @@ class PlayerViewController: UIViewController {
     func randomSong() {
         var randomIndex: Int = currentIndex // 將 randomIndex 初始化為 currentIndex 的初始值
         repeat {
-            randomIndex = Int.random(in: 0...2)
+            randomIndex = Int.random(in: 0...songs.count-1)
         } while randomIndex == currentIndex
         logger.log("進入隨機 \(randomIndex)")
         removeTimeObserver()
@@ -325,7 +329,7 @@ class PlayerViewController: UIViewController {
     @IBAction func onRandom(_ sender: UIButton) {
         isRandom = !isRandom
         logger.log("隨機嗎？\(self.isRandom)")
-
+        
     }
     
     // 重複播放按鈕的IBAction
