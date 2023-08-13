@@ -10,28 +10,40 @@
 		C61E40B12A7161AC00D63869 /* ILoveUIHateU.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C61E40AE2A7161AB00D63869 /* ILoveUIHateU.mp3 */; };
 		C61E40B22A7161AC00D63869 /* MoralOfTheStory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C61E40AF2A7161AB00D63869 /* MoralOfTheStory.mp3 */; };
 		C61E40B52A71698600D63869 /* LavenderHaze.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C61E40B42A71698600D63869 /* LavenderHaze.mp3 */; };
+		C6295E1F2A84E512009168F0 /* SomewhereOnlyWeKnow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6295E1E2A84E512009168F0 /* SomewhereOnlyWeKnow.mp3 */; };
+		C6295E212A84EC06009168F0 /* WhatWasIMadeFor.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6295E202A84EC05009168F0 /* WhatWasIMadeFor.mp3 */; };
+		C6295E232A84ED82009168F0 /* idontwannabeyouanymore.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6295E222A84ED82009168F0 /* idontwannabeyouanymore.mp3 */; };
+		C6295E272A84F338009168F0 /* CoverMeInSunshine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C6295E262A84F338009168F0 /* CoverMeInSunshine.mp3 */; };
 		C667255D2A6E836300300FFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C667255C2A6E836300300FFA /* AppDelegate.swift */; };
 		C667255F2A6E836300300FFA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C667255E2A6E836300300FFA /* SceneDelegate.swift */; };
-		C66725612A6E836300300FFA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66725602A6E836300300FFA /* ViewController.swift */; };
 		C66725642A6E836300300FFA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66725622A6E836300300FFA /* Main.storyboard */; };
 		C66725662A6E836700300FFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C66725652A6E836700300FFA /* Assets.xcassets */; };
 		C66725692A6E836700300FFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66725672A6E836700300FFA /* LaunchScreen.storyboard */; };
 		C66725712A6E83BB00300FFA /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66725702A6E83BB00300FFA /* PlayerViewController.swift */; };
+		C676E8E72A83B53500710B81 /* SongData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676E8E62A83B53500710B81 /* SongData.swift */; };
+		C686CEC12A83A0AA005933CF /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C686CEC02A83A0AA005933CF /* SongTableViewCell.swift */; };
+		C686CECA2A83A2F2005933CF /* SongListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C686CEC92A83A2F2005933CF /* SongListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C61E40AE2A7161AB00D63869 /* ILoveUIHateU.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ILoveUIHateU.mp3; sourceTree = "<group>"; };
 		C61E40AF2A7161AB00D63869 /* MoralOfTheStory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MoralOfTheStory.mp3; sourceTree = "<group>"; };
 		C61E40B42A71698600D63869 /* LavenderHaze.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LavenderHaze.mp3; sourceTree = "<group>"; };
+		C6295E1E2A84E512009168F0 /* SomewhereOnlyWeKnow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SomewhereOnlyWeKnow.mp3; sourceTree = "<group>"; };
+		C6295E202A84EC05009168F0 /* WhatWasIMadeFor.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WhatWasIMadeFor.mp3; sourceTree = "<group>"; };
+		C6295E222A84ED82009168F0 /* idontwannabeyouanymore.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = idontwannabeyouanymore.mp3; sourceTree = "<group>"; };
+		C6295E262A84F338009168F0 /* CoverMeInSunshine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CoverMeInSunshine.mp3; sourceTree = "<group>"; };
 		C66725592A6E836300300FFA /* player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = player.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C667255C2A6E836300300FFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C667255E2A6E836300300FFA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C66725602A6E836300300FFA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C66725632A6E836300300FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C66725652A6E836700300FFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C66725682A6E836700300FFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C667256A2A6E836700300FFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C66725702A6E83BB00300FFA /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		C676E8E62A83B53500710B81 /* SongData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongData.swift; sourceTree = "<group>"; };
+		C686CEC02A83A0AA005933CF /* SongTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
+		C686CEC92A83A2F2005933CF /* SongListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,19 +76,49 @@
 		C667255B2A6E836300300FFA /* player */ = {
 			isa = PBXGroup;
 			children = (
+				C676E8E82A83B54000710B81 /* models */,
+				C686CEC42A83A106005933CF /* Views */,
+				C686CEBF2A839D65005933CF /* View Controllers */,
 				C667255C2A6E836300300FFA /* AppDelegate.swift */,
 				C667255E2A6E836300300FFA /* SceneDelegate.swift */,
-				C66725602A6E836300300FFA /* ViewController.swift */,
 				C66725622A6E836300300FFA /* Main.storyboard */,
-				C66725702A6E83BB00300FFA /* PlayerViewController.swift */,
 				C66725652A6E836700300FFA /* Assets.xcassets */,
 				C66725672A6E836700300FFA /* LaunchScreen.storyboard */,
 				C667256A2A6E836700300FFA /* Info.plist */,
 				C61E40AE2A7161AB00D63869 /* ILoveUIHateU.mp3 */,
 				C61E40AF2A7161AB00D63869 /* MoralOfTheStory.mp3 */,
+				C6295E1E2A84E512009168F0 /* SomewhereOnlyWeKnow.mp3 */,
 				C61E40B42A71698600D63869 /* LavenderHaze.mp3 */,
+				C6295E202A84EC05009168F0 /* WhatWasIMadeFor.mp3 */,
+				C6295E222A84ED82009168F0 /* idontwannabeyouanymore.mp3 */,
+				C6295E262A84F338009168F0 /* CoverMeInSunshine.mp3 */,
 			);
 			path = player;
+			sourceTree = "<group>";
+		};
+		C676E8E82A83B54000710B81 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				C676E8E62A83B53500710B81 /* SongData.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		C686CEBF2A839D65005933CF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C66725702A6E83BB00300FFA /* PlayerViewController.swift */,
+				C686CEC92A83A2F2005933CF /* SongListTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C686CEC42A83A106005933CF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C686CEC02A83A0AA005933CF /* SongTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,11 +180,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C66725692A6E836700300FFA /* LaunchScreen.storyboard in Resources */,
+				C6295E232A84ED82009168F0 /* idontwannabeyouanymore.mp3 in Resources */,
+				C6295E272A84F338009168F0 /* CoverMeInSunshine.mp3 in Resources */,
 				C66725662A6E836700300FFA /* Assets.xcassets in Resources */,
 				C61E40B12A7161AC00D63869 /* ILoveUIHateU.mp3 in Resources */,
 				C61E40B22A7161AC00D63869 /* MoralOfTheStory.mp3 in Resources */,
+				C6295E1F2A84E512009168F0 /* SomewhereOnlyWeKnow.mp3 in Resources */,
 				C66725642A6E836300300FFA /* Main.storyboard in Resources */,
 				C61E40B52A71698600D63869 /* LavenderHaze.mp3 in Resources */,
+				C6295E212A84EC06009168F0 /* WhatWasIMadeFor.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +199,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C66725612A6E836300300FFA /* ViewController.swift in Sources */,
+				C686CECA2A83A2F2005933CF /* SongListTableViewController.swift in Sources */,
+				C686CEC12A83A0AA005933CF /* SongTableViewCell.swift in Sources */,
+				C676E8E72A83B53500710B81 /* SongData.swift in Sources */,
 				C66725712A6E83BB00300FFA /* PlayerViewController.swift in Sources */,
 				C667255D2A6E836300300FFA /* AppDelegate.swift in Sources */,
 				C667255F2A6E836300300FFA /* SceneDelegate.swift in Sources */,
