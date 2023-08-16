@@ -67,14 +67,18 @@
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8nS-jK-nBa">
                                             <rect key="frame" x="130" y="103.5" width="18" height="15.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="tintColor" red="0.8980392157" green="0.8980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" backgroundImage="heart" catalog="system"/>
+                                            <connections>
+                                                <action selector="onClickCollect:" destination="fSV-3E-XNx" eventType="touchUpInside" id="fft-ms-fCQ"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="albumImageView" destination="klQ-yT-EHs" id="nS3-oN-ppY"/>
+                                    <outlet property="collectButton" destination="8nS-jK-nBa" id="m1P-QZ-f13"/>
                                     <outlet property="epNameLabel" destination="kqz-b2-vjr" id="tIh-7b-Dh2"/>
                                     <outlet property="listeningAcountLabel" destination="dAY-Cr-9oq" id="tYR-0C-ylP"/>
                                     <outlet property="songNameLabel" destination="pEO-9g-M1z" id="X8M-FM-DSa"/>
@@ -170,13 +174,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdZ-lY-vyn">
-                                <rect key="frame" x="370" y="615" width="24" height="24"/>
+                                <rect key="frame" x="366" y="615" width="28" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="bold"/>
-                                </buttonConfiguration>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" backgroundImage="heart" catalog="system"/>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dfc-3s-QFg">
                                 <rect key="frame" x="18" y="650" width="378" height="30"/>
@@ -393,6 +395,7 @@ Oh-oh, oh-oh (that's the moral of the story, that's the-)
                         <outlet property="playButton" destination="UmM-Yb-cGZ" id="UZe-Y5-u5s"/>
                         <outlet property="preButton" destination="IXk-64-2S2" id="yey-wB-Y2N"/>
                         <outlet property="singerLabel" destination="D4J-mP-LBQ" id="DAT-zG-8ST"/>
+                        <outlet property="songCollectButton" destination="hdZ-lY-vyn" id="txh-6v-e7r"/>
                         <outlet property="songDurationLabel" destination="2Tu-Ij-RUH" id="rJt-Tx-W5f"/>
                         <outlet property="songPageControl" destination="goJ-Ab-Nn7" id="3Ko-d6-M1W"/>
                         <outlet property="songPassTimeLabel" destination="Dch-Jh-IX0" id="8zd-W1-4XC"/>
@@ -460,7 +463,7 @@ Oh-oh, oh-oh (that's the moral of the story, that's the-)
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

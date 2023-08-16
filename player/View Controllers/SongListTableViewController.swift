@@ -14,14 +14,14 @@ import UIKit
 //}
 
 class SongListTableViewController: UITableViewController {
-    let songList: [Song] = [
-        Song(name: "Moral Of The Story", albumPic: "MoralOfTheStory_1", songFile: "MoralOfTheStory", singer: "Ashe", albumName: "Moral Of The Story"),
-        Song(name: "I Love U & I Hate U", albumPic: "ILoveUIHateU_2", songFile: "ILoveUIHateU", singer: "Gnash", albumName: "Us"),
-        Song(name: "Lavender Haze", albumPic: "LavenderHaze_3", songFile: "LavenderHaze", singer: "Taylor Swift", albumName: "Midnights"),
-        Song(name: "Somewhere Only We Know", albumPic: "SomewhereOnlyWeKnow_4", songFile: "SomewhereOnlyWeKnow", singer: "Rhianne", albumName: "Somewhere Only We Know"),
-        Song(name: "What Was I Made For", albumPic: "WhatWasIMadeFor_5", songFile: "WhatWasIMadeFor", singer: "Billie Eilish", albumName: "Barbie"),
-        Song(name: "idontwannabeyouanymore", albumPic: "idontwannabeyouanymore_6", songFile: "idontwannabeyouanymore", singer: "Billie Eilish", albumName: "Don't Smile at Me"),
-        Song(name: "Cover Me In Sunshine", albumPic: "CoverMeInSunshine_7", songFile: "CoverMeInSunshine", singer: "P!NK, Willow Sage Hart", albumName: "All I Know So Far: Setlist"),
+    var songList: [Song] = [
+        Song(name: "Moral Of The Story", albumPic: "MoralOfTheStory_1", songFile: "MoralOfTheStory", singer: "Ashe", albumName: "Moral Of The Story", isCollect: false),
+        Song(name: "I Love U & I Hate U", albumPic: "ILoveUIHateU_2", songFile: "ILoveUIHateU", singer: "Gnash", albumName: "Us", isCollect: false),
+        Song(name: "Lavender Haze", albumPic: "LavenderHaze_3", songFile: "LavenderHaze", singer: "Taylor Swift", albumName: "Midnights", isCollect: false),
+        Song(name: "Somewhere Only We Know", albumPic: "SomewhereOnlyWeKnow_4", songFile: "SomewhereOnlyWeKnow", singer: "Rhianne", albumName: "Somewhere Only We Know", isCollect: false),
+        Song(name: "What Was I Made For", albumPic: "WhatWasIMadeFor_5", songFile: "WhatWasIMadeFor", singer: "Billie Eilish", albumName: "Barbie", isCollect: false),
+        Song(name: "idontwannabeyouanymore", albumPic: "idontwannabeyouanymore_6", songFile: "idontwannabeyouanymore", singer: "Billie Eilish", albumName: "Don't Smile at Me", isCollect: false),
+        Song(name: "Cover Me In Sunshine", albumPic: "CoverMeInSunshine_7", songFile: "CoverMeInSunshine", singer: "P!NK, Willow Sage Hart", albumName: "All I Know So Far: Setlist", isCollect: false),
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,12 @@ class SongListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
     func setNavgation() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
+    
     func setupGradientBackground() {
         let backgroundView = UIView()
         let gradientLayer = CAGradientLayer()
@@ -47,6 +49,21 @@ class SongListTableViewController: UITableViewController {
         gradientLayer.frame = tableView.frame
         backgroundView.layer.addSublayer(gradientLayer)
         tableView.backgroundView = backgroundView
+    }
+    @IBAction func onClickCollect(_ sender: UIButton) {
+        let point = sender.convert(CGPoint.zero, to: tableView)
+        if let indexPath = tableView.indexPathForRow(at: point) {
+            songList[indexPath.row].isCollect = !songList[indexPath.row].isCollect
+            
+            if songList[indexPath.row].isCollect {
+                sender.setBackgroundImage(UIImage(systemName: "heart.fill"), for: .normal)
+//                sender.tintColor = .red
+            } else {
+                sender.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
+//                sender.tintColor = .white
+            }
+        }
+        
     }
     
     // MARK: - Table view data source

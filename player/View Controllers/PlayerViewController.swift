@@ -45,13 +45,14 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var songPassTimeLabel: UILabel!
     @IBOutlet weak var songDurationLabel: UILabel!
-    
+    @IBOutlet weak var songCollectButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientBackground()
         setupSlider()
         lyricsScrollView.isHidden = true
+        setCollectStatus()
         showingLyrics = false
         lyricsLabel.sizeToFit()
         changeSong()
@@ -75,6 +76,13 @@ class PlayerViewController: UIViewController {
         if player.timeControlStatus == .playing {
             removeTimeObserver()
             player.pause()
+        }
+    }
+    
+    func setCollectStatus() {
+        if let currentSong = songs?[currentIndex] {
+            print("哈哈",currentSong.isCollect)
+            currentSong.isCollect ? songCollectButton.setBackgroundImage(UIImage(systemName: "heart.fill"), for: .normal) :  songCollectButton.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
         }
     }
     
@@ -213,6 +221,7 @@ class PlayerViewController: UIViewController {
     // 更新歌曲資訊及視圖顯示
     func changeSong() {
         let currentSong = songs[currentIndex]
+        setCollectStatus()
         titleLabel.text = currentSong.name
         singerLabel.text = currentSong.singer
         songPicImageView.image = UIImage(named: currentSong.albumPic)

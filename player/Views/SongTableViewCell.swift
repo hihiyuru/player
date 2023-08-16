@@ -13,6 +13,7 @@ class SongTableViewCell: UITableViewCell {
     @IBOutlet weak var albumImageView: UIImageView!
     @IBOutlet weak var songNameLabel: UILabel!
     
+    @IBOutlet weak var collectButton: UIButton!
     @IBOutlet weak var listeningAcountLabel: UILabel!
     @IBOutlet weak var epNameLabel: UILabel!
     override func awakeFromNib() {

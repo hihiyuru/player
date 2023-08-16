@@ -13,4 +13,5 @@ struct Song {
     let songFile: String
     let singer: String
     let albumName: String
+    var isCollect: Bool
 }
